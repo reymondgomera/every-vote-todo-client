@@ -1,5 +1,6 @@
 import { DotBackgroundWrapper } from "@/components/dot-background";
 import { ThemeToggle } from "@/components/mode-toggle";
+import LoginForm from "./login-form";
 
 const LoginPage = () => {
   return (
@@ -8,6 +9,8 @@ const LoginPage = () => {
         <div className="absolute -top-4 right-5">
           <ThemeToggle />
         </div>
+
+        <LoginForm />
       </DotBackgroundWrapper>
     </section>
   );

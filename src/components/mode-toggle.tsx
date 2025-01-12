@@ -7,7 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useTheme } from "@/components/provider/theme-provider";
+import { useTheme } from "@/hooks/useTheme";
 
 export function ThemeToggle() {
   const { setTheme } = useTheme();
@@ -23,13 +23,13 @@ export function ThemeToggle() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-10" align="end">
         <DropdownMenuItem
-          className="text-center w-full inline-block"
+          className="inline-block w-full text-center"
           onClick={() => setTheme("light")}
         >
           Light
         </DropdownMenuItem>
         <DropdownMenuItem
-          className="text-center w-full inline-block"
+          className="inline-block w-full text-center"
           onClick={() => setTheme("dark")}
         >
           Dark
