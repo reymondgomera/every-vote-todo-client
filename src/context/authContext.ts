@@ -15,4 +15,6 @@ const initialState: AuthProivderState = {
   setUser: () => null,
 };
 
+//* Authentication context
+//* share user, tokens and setters accross components
 export const AuthContext = createContext<AuthProivderState>(initialState);

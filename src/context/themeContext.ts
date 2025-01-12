@@ -11,4 +11,6 @@ const initialState: ThemeContext = {
   setTheme: () => null,
 };
 
+//* Theme context
+//* share theme and setter accross components
 export const ThemeContext = createContext<ThemeContext>(initialState); // prettier-ignore

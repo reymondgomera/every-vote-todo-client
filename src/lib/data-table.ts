@@ -1,5 +1,6 @@
 import { type Column } from "@tanstack/react-table";
 
+//* Get common pinning styles for a column
 export function getCommonPinningStyles<TData>({
   column,
   withBorder = false,

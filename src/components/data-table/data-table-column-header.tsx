@@ -23,6 +23,11 @@ interface DataTableColumnHeaderProps<TData, TValue>
   title: string;
 }
 
+//* Data table column header component
+//* Use to modify the column header add sorting, and hiding functionality
+//* column: column definition
+//* title: column title
+//* className: additional class name
 export function DataTableColumnHeader<TData, TValue>({
   column,
   title,

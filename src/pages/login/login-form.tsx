@@ -21,6 +21,7 @@ import { useEffect } from "react";
 import { handleAxiosError } from "@/lib/handleAxiosError";
 import { useUserQuery } from "@/hooks/useUserQuery";
 
+//* Login form component
 const LoginForm = () => {
   const { token, setToken } = useAuth();
   const navigate = useNavigate();

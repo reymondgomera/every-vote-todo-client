@@ -15,6 +15,10 @@ interface DataTableToolbarProps<TData> {
   filterFields?: DataTableFilterField<TData>[];
 }
 
+//* Data table toolbar component
+//* show search, filter dropdown selects and reset button, view options for columns
+//* table: table instance
+//* filterFields: filter fields to be displayed in the toolbar e.g search filter, filter dropdown select
 export function DataTableToolbar<TData>({
   table,
   filterFields,

@@ -9,6 +9,7 @@ type ThemeProviderProps = {
   storageKey?: string;
 };
 
+//* Theme provider component
 export const ThemeProvider = ({
   children,
   defaultTheme = "light",

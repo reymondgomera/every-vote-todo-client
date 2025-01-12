@@ -34,6 +34,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { handleAxiosError } from "@/lib/handleAxiosError";
 
+//* Row action column component
+//* show edit, mark as completed, delete todo action
 export const RowAction = ({ row }: CellContext<Todo, unknown>) => {
   const rowData = row.original;
 

@@ -8,6 +8,8 @@ type AuthProviderProps = {
   cookieKey?: string;
 };
 
+//* Auth provider component
+//* This provider is used to store the user and token in the browser, token will be store in cookies
 export const AuthProvider = ({
   children,
   cookieKey = "auth-token",

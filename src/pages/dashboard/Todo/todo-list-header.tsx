@@ -18,6 +18,10 @@ type TodoListHeaderProps = {
   isLoading: boolean;
 };
 
+//* Todo list header component
+//* show total, completed, uncompleted count
+//* data: todo data
+//* isLoading: loading state
 const TodoListHeader = ({ data, isLoading }: TodoListHeaderProps) => {
   const [isOpen, setIsOpen] = useState(false);
 

@@ -4,6 +4,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { NotebookPen } from "lucide-react";
 import { Link } from "react-router";
 
+//* Landing page component
 const LandingPage = () => {
   return (
     <section className="relative flex h-screen w-full items-center justify-center font-inter">

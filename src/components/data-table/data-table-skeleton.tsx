@@ -13,6 +13,10 @@ interface DataTableSkeletonProps {
   rowCount?: number;
 }
 
+//* Data table skeleton component
+//* show skeleton loader for the table
+//* columnCount: number of columns
+//* rowCount: number of rows
 export function DataTableSkeleton({
   columnCount,
   rowCount = 10,

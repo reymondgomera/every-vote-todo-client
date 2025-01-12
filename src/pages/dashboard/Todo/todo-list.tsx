@@ -10,6 +10,10 @@ type TodoListProps = {
   isLoading: boolean;
 };
 
+//* Todo list component
+//* show todo list table
+//* data: todo data
+//* isLoading: loading state
 const TodoList = ({ data, isLoading }: TodoListProps) => {
   const initialState = useMemo(() => {
     return {

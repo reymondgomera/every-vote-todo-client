@@ -8,6 +8,7 @@ import { AxiosError } from "axios";
 import { useTodosQuery } from "@/hooks/useTodoQuery";
 import TodoListHeader from "./Todo/todo-list-header";
 
+//* Dashboard component
 const Dashboard = () => {
   const { token, setToken, setUser } = useAuth();
   const { data: userData, isSuccess, error } = useUserQuery(token);

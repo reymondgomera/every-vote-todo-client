@@ -1,6 +1,7 @@
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 
+//* Handle axios error
 export const handleAxiosError = (err: unknown) => {
   if (err instanceof AxiosError) {
     const data = err.response?.data ?? "Something wenth wrong. Please try again."; // prettier-ignore

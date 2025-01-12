@@ -10,6 +10,8 @@ import { User } from "@/types";
 import { LogOut } from "lucide-react";
 import { forwardRef } from "react";
 
+//* User button component
+//* show user avatar and sign out button
 const UserButton = ({
   user,
   signOut,

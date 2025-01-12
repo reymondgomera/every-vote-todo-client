@@ -35,6 +35,10 @@ type TodoFormProps = {
   handleClose: () => void;
 };
 
+//* Todo form component
+//* show todo form to create or update todo
+//* data: todo data
+//* handleClose: function to close the form popup
 const TodoForm = ({ data, handleClose }: TodoFormProps) => {
   const queryClient = useQueryClient();
   const { token } = useAuth();

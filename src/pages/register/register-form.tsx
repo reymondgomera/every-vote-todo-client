@@ -19,6 +19,7 @@ import { User } from "@/types";
 import { handleAxiosError } from "@/lib/handleAxiosError";
 import { toast } from "sonner";
 
+//* Register form component
 const RegisterForm = () => {
   const { isPending, mutate } = useMutation({
     mutationKey: ["register"],

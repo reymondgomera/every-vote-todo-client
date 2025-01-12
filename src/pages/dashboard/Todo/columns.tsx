@@ -6,6 +6,7 @@ import { Todo } from "@/types";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { RowAction } from "./row-action";
 
+//* Todo list columns
 export const columns: ColumnDef<Todo>[] = [
   {
     accessorKey: "title",

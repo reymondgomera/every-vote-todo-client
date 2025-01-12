@@ -37,6 +37,11 @@ interface DataTableProps<TData, TValue> {
   filterFields?: DataTableFilterField<TData>[];
 }
 
+//* Data table component using tanstack react table
+//* columns: column definitions
+//* data: data to be displayed in the table
+//* initialState: initial state of the table
+//* filterFields: filter fields to be displayed in the toolbar e.g search filter, filter dropdown select
 export function DataTable<TData, TValue>({
   columns,
   data,

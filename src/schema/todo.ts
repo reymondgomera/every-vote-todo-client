@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-//* schema
+//* todo schema
 export const todoSchema = z.object({
   title: z.string().min(1, { message: "Title is required." }),
   description: z.string().min(1, { message: "Description is required." }),

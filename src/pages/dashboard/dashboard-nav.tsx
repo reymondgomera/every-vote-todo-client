@@ -5,6 +5,7 @@ import UserButton from "./user-button";
 import { ThemeToggle } from "@/components/mode-toggle";
 import { useAuth } from "@/hooks/useAuth";
 
+//* Dashboard nav component
 const DashboardNav = () => {
   const { user, setToken } = useAuth();
 
