@@ -12,13 +12,7 @@ import { forwardRef } from "react";
 
 //* User button component
 //* show user avatar and sign out button
-const UserButton = ({
-  user,
-  signOut,
-}: {
-  user: User | null;
-  signOut: () => void;
-}) => {
+const UserButton = ({ user, signOut }: { user: User | null; signOut: () => void }) => {
   if (!user) return null;
 
   return (
@@ -38,7 +32,7 @@ const UserButton = ({
         <DropdownMenuSeparator />
         <DropdownMenuItem className="cursor-pointer" onClick={() => signOut()}>
           <LogOut />
-          <span>Sign out</span>
+          <span>Logout</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -50,6 +44,7 @@ export const UserAvatar = forwardRef<
   { username: string } & React.ComponentPropsWithRef<"button">
 >((props, ref) => (
   <button
+    data-testid="user-avatar-button"
     ref={ref}
     {...props}
     className="flex size-8 cursor-pointer items-center justify-center rounded-full bg-blue-500/30 font-semibold capitalize text-blue-500"

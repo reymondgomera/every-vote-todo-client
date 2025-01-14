@@ -43,12 +43,7 @@ const TodoList = ({ data, isLoading }: TodoListProps) => {
   if (isLoading) return <DataTableSkeleton columnCount={6} />;
 
   return (
-    <DataTable
-      initialState={initialState}
-      filterFields={filterFields}
-      columns={columns}
-      data={data ?? []}
-    />
+    <DataTable initialState={initialState} filterFields={filterFields} columns={columns} data={data ?? []} />
   );
 };
 

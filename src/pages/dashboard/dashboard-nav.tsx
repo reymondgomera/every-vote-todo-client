@@ -11,16 +11,13 @@ const DashboardNav = () => {
 
   const signOut = () => {
     setToken(null);
-    window.location.href = "/login";
+    window.location.assign("/login");
   };
 
   return (
     <header className="h-[80px] w-full bg-transparent px-6">
       <nav className="flex items-center justify-between py-5">
-        <Link
-          to="/"
-          className="text-balance text-center text-xl font-extrabold"
-        >
+        <Link to="/" className="text-balance text-center text-xl font-extrabold">
           EveryVote{" "}
           <span className="relative">
             <span className="text-primary">Todo</span>

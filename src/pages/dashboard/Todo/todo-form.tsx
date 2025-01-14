@@ -9,20 +9,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@/hooks/useAuth";
 import { type TodoForm, todoSchema } from "@/schema/todo";
 import { Todo } from "@/types";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
@@ -77,9 +66,7 @@ const TodoForm = ({ data, handleClose }: TodoFormProps) => {
 
   const form = useForm<TodoForm>({
     defaultValues,
-    resolver: zodResolver(
-      !isEdit ? todoSchema : todoSchema.merge(paramsSchema),
-    ),
+    resolver: zodResolver(!isEdit ? todoSchema : todoSchema.merge(paramsSchema)),
     mode: "onChange",
   });
 
@@ -88,6 +75,7 @@ const TodoForm = ({ data, handleClose }: TodoFormProps) => {
       onError: (err) => handleAxiosError(err),
       onSuccess: ({ todo }) => {
         toast.success(`Todo ${isEdit ? "updated" : "created"} successfully"`);
+
         form.reset();
         handleClose();
 
@@ -95,8 +83,6 @@ const TodoForm = ({ data, handleClose }: TodoFormProps) => {
         if (!isEdit) {
           queryClient.setQueryData<Todo[]>(["todos"], (oldTodos) => {
             if (!oldTodos || oldTodos.length < 1) return [todo];
-            console.log("oldtodos =", oldTodos);
-            console.log([todo, ...oldTodos]);
             return [todo, ...oldTodos];
           });
           return;
@@ -117,11 +103,7 @@ const TodoForm = ({ data, handleClose }: TodoFormProps) => {
 
   return (
     <Form {...form}>
-      <form
-        id="todo-form"
-        onSubmit={form.handleSubmit(handleSubmit)}
-        className="space-y-4"
-      >
+      <form id="todo-form" onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="title"
@@ -161,16 +143,9 @@ const TodoForm = ({ data, handleClose }: TodoFormProps) => {
                   <FormControl>
                     <Button
                       variant={"outline"}
-                      className={cn(
-                        "pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground",
-                      )}
+                      className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}
                     >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
+                      {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
                   </FormControl>
@@ -195,12 +170,7 @@ const TodoForm = ({ data, handleClose }: TodoFormProps) => {
         />
 
         <div className="flex justify-end gap-3">
-          <Button
-            disabled={isPending}
-            type="button"
-            variant="outline"
-            onClick={handleClose}
-          >
+          <Button disabled={isPending} type="button" variant="outline" onClick={handleClose}>
             Cancel
           </Button>
           <Button form="todo-form" disabled={isPending} type="submit">

@@ -1,23 +1,17 @@
 import { UserPlus } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import axios from "axios";
+import { Link } from "react-router";
+import { useMutation } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { registerSchema, type RegisterForm } from "@/schema/auth";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import { User } from "@/types";
 import { handleAxiosError } from "@/lib/handleAxiosError";
-import { toast } from "sonner";
 
 //* Register form component
 const RegisterForm = () => {
@@ -59,9 +53,7 @@ const RegisterForm = () => {
         </div>
 
         <div className="flex flex-col items-center justify-center gap-2">
-          <h1 className="text-center text-2xl font-extrabold dark:text-slate-950">
-            Register
-          </h1>
+          <h1 className="text-center text-2xl font-extrabold dark:text-slate-950">Register</h1>
           <p className="text-center text-sm leading-relaxed text-muted-foreground">
             Join EveryVote Todo and take control of your tasks with ease!
           </p>
@@ -69,10 +61,7 @@ const RegisterForm = () => {
       </header>
 
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleSubmit)}
-          className="mt-8 space-y-4"
-        >
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="mt-8 space-y-4">
           <FormField
             control={form.control}
             name="username"
@@ -118,11 +107,7 @@ const RegisterForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Confrim Password"
-                    {...field}
-                  />
+                  <Input type="password" placeholder="Confirm Password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -135,10 +120,7 @@ const RegisterForm = () => {
 
           <p className="text-center text-xs text-muted-foreground">
             Already have an account?{" "}
-            <Link
-              to="/Login"
-              className="hover:text-primary hover:underline hover:decoration-primary"
-            >
+            <Link to="/login" className="hover:text-primary hover:underline hover:decoration-primary">
               Login
             </Link>
           </p>

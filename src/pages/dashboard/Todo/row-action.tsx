@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Ellipsis } from "lucide-react";
 import { CellContext } from "@tanstack/react-table";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -11,13 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import TodoForm from "./todo-form";
 import {
   AlertDialog,
@@ -44,29 +38,31 @@ export const RowAction = ({ row }: CellContext<Todo, unknown>) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isShowConfirmation, setIsShowConfirmation] = useState(false);
 
-  const { mutate: updateStatusMutate, isPending: updateStatusIsPending } =
-    useMutation({
-      mutationKey: ["update-status", "todo"],
-      mutationFn: async (data: Todo) => {
-        const url = `${import.meta.env.VITE_API_URL}/todos/${data.uuid}`;
-        const response = await axios.put<{ todo: Todo }>(url, data, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        return response.data;
-      },
-    });
+  const { mutate: updateStatusMutate, isPending: updateStatusIsPending } = useMutation({
+    mutationKey: ["update-status", "todo"],
+    mutationFn: async (data: Todo) => {
+      const url = `${import.meta.env.VITE_API_URL}/todos/${data.uuid}`;
+      const response = await axios.put<{ todo: Todo }>(url, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return response.data;
+    },
+  });
 
-  const { mutate: deleteTodoMutate, isPending: deleteTodoIsPending } =
-    useMutation({
-      mutationKey: ["delete", "todo"],
-      mutationFn: async (id: string) => {
-        const url = `${import.meta.env.VITE_API_URL}/todos/${id}`;
-        await axios.delete(url, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        return id;
-      },
-    });
+  const {
+    mutate: deleteTodoMutate,
+    isPending: deleteTodoIsPending,
+    error,
+  } = useMutation({
+    mutationKey: ["delete", "todo"],
+    mutationFn: async (id: string) => {
+      const url = `${import.meta.env.VITE_API_URL}/todos/${id}`;
+      await axios.delete(url, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return id;
+    },
+  });
 
   const handleCloseForm = () => {
     setIsOpen(false);
@@ -76,15 +72,13 @@ export const RowAction = ({ row }: CellContext<Todo, unknown>) => {
     setIsShowConfirmation(false);
   };
 
-  const toggleStatus = () => {
+  const toggleStatus = useCallback(() => {
     updateStatusMutate(
       { ...rowData, status: !rowData.status },
       {
         onError: (err) => handleAxiosError(err),
         onSuccess: ({ todo }) => {
-          toast.success(
-            `Todo marked as ${todo.status ? '"COMPLETED"' : '"UNCOMPLETED"'}`,
-          );
+          toast.success(`Todo marked as ${todo.status ? '"COMPLETED"' : '"UNCOMPLETED"'}`);
           handleCloseForm();
 
           queryClient.setQueryData<Todo[]>(["todos"], (oldTodos) => {
@@ -99,7 +93,7 @@ export const RowAction = ({ row }: CellContext<Todo, unknown>) => {
         },
       },
     );
-  };
+  }, [rowData, queryClient, updateStatusMutate]);
 
   const handleDelete = () => {
     deleteTodoMutate(rowData.uuid, {
@@ -109,10 +103,6 @@ export const RowAction = ({ row }: CellContext<Todo, unknown>) => {
         handleCloseConfirmation();
         queryClient.setQueryData<Todo[]>(["todos"], (oldTodos) => {
           if (!oldTodos || oldTodos.length < 1) return [];
-          console.log(
-            "without deleted todo",
-            oldTodos.filter((todo) => todo.uuid !== id),
-          );
           return oldTodos.filter((todo) => todo.uuid !== id);
         });
       },
@@ -123,38 +113,25 @@ export const RowAction = ({ row }: CellContext<Todo, unknown>) => {
     <>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <Button
-            className="flex size-8 p-0 data-[state=open]:bg-muted"
-            variant="ghost"
-            size="icon"
-          >
+          <Button className="flex size-8 p-0 data-[state=open]:bg-muted" variant="ghost" size="icon">
             <Ellipsis className="size-4" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-50" align="end">
-          <DropdownMenuItem onClick={() => setIsOpen(true)}>
-            Edit
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            disabled={updateStatusIsPending}
-            onClick={toggleStatus}
-          >
+          <DropdownMenuItem onClick={() => setIsOpen(true)}>Edit</DropdownMenuItem>
+          <DropdownMenuItem disabled={updateStatusIsPending} onClick={toggleStatus}>
             Mark as {!rowData.status ? '"COMPLETED"' : '"UNCOMPLETED"'}
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setIsShowConfirmation(true)}>
-            Delete
-          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setIsShowConfirmation(true)}>Delete</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 
       {isOpen && (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogContent>
+          <DialogContent data-testid="edit-todo-dialog">
             <DialogHeader>
               <DialogTitle>Update Todo</DialogTitle>
-              <DialogDescription>
-                Update the todo task to get things done.
-              </DialogDescription>
+              <DialogDescription>Update the todo task to get things done.</DialogDescription>
             </DialogHeader>
             <TodoForm handleClose={handleCloseForm} data={rowData} />
           </DialogContent>
@@ -162,11 +139,8 @@ export const RowAction = ({ row }: CellContext<Todo, unknown>) => {
       )}
 
       {isShowConfirmation && (
-        <AlertDialog
-          open={isShowConfirmation}
-          onOpenChange={setIsShowConfirmation}
-        >
-          <AlertDialogContent>
+        <AlertDialog open={isShowConfirmation} onOpenChange={setIsShowConfirmation}>
+          <AlertDialogContent data-testid="delete-todo-dialog">
             <AlertDialogHeader>
               <AlertDialogTitle>Confirmation</AlertDialogTitle>
               <AlertDialogDescription>
@@ -175,13 +149,8 @@ export const RowAction = ({ row }: CellContext<Todo, unknown>) => {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel onClick={handleCloseConfirmation}>
-                Cancel
-              </AlertDialogCancel>
-              <AlertDialogAction
-                disabled={deleteTodoIsPending}
-                onClick={handleDelete}
-              >
+              <AlertDialogCancel onClick={handleCloseConfirmation}>Cancel</AlertDialogCancel>
+              <AlertDialogAction disabled={deleteTodoIsPending} onClick={handleDelete}>
                 Continue
               </AlertDialogAction>
             </AlertDialogFooter>

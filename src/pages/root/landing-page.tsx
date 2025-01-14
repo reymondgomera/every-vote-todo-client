@@ -23,24 +23,17 @@ const LandingPage = () => {
               </span>
             </h1>
             <p className="text-center text-sm leading-relaxed md:text-base">
-              Organize, prioritize, and accomplish your tasks effortlessly with
-              EveryVote Todo. The smarter way to stay on top of what matters
-              most.
+              Organize, prioritize, and accomplish your tasks effortlessly with EveryVote Todo. The smarter
+              way to stay on top of what matters most.
             </p>
           </div>
 
           <div className="flex gap-3.5">
-            <Link
-              to="/login"
-              className={buttonVariants({ variant: "default" })}
-            >
+            <Link to="/login" className={buttonVariants({ variant: "default" })}>
               Login
             </Link>
 
-            <Link
-              to="/register"
-              className={buttonVariants({ variant: "outline" })}
-            >
+            <Link to="/register" className={buttonVariants({ variant: "outline" })}>
               Register
             </Link>
           </div>
